@@ -12,8 +12,7 @@ public class Ct246_QL_CuaHang_TapHoa {
         
         // Gọi hàm getConnection() để test
         Connection conn = DatabaseConfig.getConnection();
-        
-        // Nếu kết nối thành công, biến conn sẽ khác null
+    
         if (conn == null) {
             System.out.println("Ket noi that bai. Vui long kiem tra lai.");
         }
