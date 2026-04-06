@@ -5,10 +5,7 @@ package ct246_ql_cuahang_taphoa.dao;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- *
- * @author vothanhdatthinh
- */
+
 public class CustomerDAO {
     
 }
