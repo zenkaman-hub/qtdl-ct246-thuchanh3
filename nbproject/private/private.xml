@@ -5,7 +5,6 @@
         <group>
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/Ct246_QL_CuaHang_TapHoa.java</file>
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/config/DatabaseConfig.java</file>
-            <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/model/Product.java</file>
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/model/Category.java</file>
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/model/Order.java</file>
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/model/OrderItem.java</file>
@@ -32,6 +31,7 @@
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/util/SessionManager.java</file>
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/util/ConsoleUtil.java</file>
             <file>file:/D:/ct246_QL_CuaHang_TapHoa/README.md</file>
+            <file>file:/D:/ct246_QL_CuaHang_TapHoa/src/ct246_ql_cuahang_taphoa/model/Product.java</file>
         </group>
     </open-files>
 </project-private>
