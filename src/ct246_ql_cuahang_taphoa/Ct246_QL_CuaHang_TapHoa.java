@@ -16,5 +16,6 @@ public class Ct246_QL_CuaHang_TapHoa {
 //        }
            LoginUI loginUI = new LoginUI();
            loginUI.display();
+           
     } 
 }

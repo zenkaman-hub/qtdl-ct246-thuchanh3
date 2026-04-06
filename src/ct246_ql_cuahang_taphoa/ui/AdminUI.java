@@ -102,7 +102,7 @@ public class AdminUI {
             System.out.print("Nhập ID Danh mục (VD: 1-Đồ uống / 2-Bánh kẹo / 3-Gia vị / 4-Hóa mỹ phẩm): ");
             int catId = Integer.parseInt(scanner.nextLine());
             
-            System.out.print("Nhập ID Nhà cung cấp: (VD: 1-Công ty Coca-Cola VN / 2-Acecook Việt Nam / 3-Unilever / 4-Massan Group)");
+            System.out.print("Nhập ID Nhà cung cấp: (VD: 1-Công ty Coca-Cola VN / 2-Acecook Việt Nam / 3-Unilever / 4-Massan Group): ");
             int supId = Integer.parseInt(scanner.nextLine());
             
             System.out.print("Nhập đơn vị tính (VD: Lon, Chai, Gói, Thùng): ");

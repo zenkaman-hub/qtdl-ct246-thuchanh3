@@ -27,7 +27,7 @@ public class LoginUI {
             
             if(authService.login(username, password)){
                 String role = SessionManager.getCurrentUser().getRole();
-                System.out.println("Đăng nhập thành công! Xin chào" + username);
+                System.out.println("Đăng nhập thành công! Xin chào " + username);
                 
                 if(role.equalsIgnoreCase("ADMIN")){
                     new AdminUI().display();
