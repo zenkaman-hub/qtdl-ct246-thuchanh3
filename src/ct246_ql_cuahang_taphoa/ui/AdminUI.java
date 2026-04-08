@@ -35,6 +35,7 @@ public class AdminUI {
                 switch (choice) {
                     case 1:
                         System.out.println("Đang mở chức năng Quản lý nhân viên...");
+                        manageEmployeesMenu();
                         break;
                     case 2:
                         // Gọi menu con Quản lý sản phẩm
@@ -89,7 +90,7 @@ public class AdminUI {
             }
         }
     }
-
+    
     private void showAddProductMenu() {
         System.out.println("\n--- THÊM SẢN PHẨM MỚI ---");
         
@@ -126,7 +127,34 @@ public class AdminUI {
             System.out.println("Lỗi nhập liệu: Giá tiền hoặc ID, Số lượng phải là số!");
         }
     }
-    
+    private void manageEmployeesMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- QUẢN LÝ NHÂN VIÊN ---");
+            System.out.println("1. Thêm nhân viên mới");
+            System.out.println("2. Khóa tài khoản nhân viên (Nghỉ việc)");
+            System.out.println("0. Quay lại menu chính");
+            System.out.print("Chọn chức năng: ");
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        handleAddEmployee(); // Gọi hàm thêm nhân viên
+                        break;
+                    case 2:
+                        handleLockEmployee(); // Gọi hàm khóa nhân viên
+                        break;
+                    case 0:
+                        back = true;
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi: Vui lòng nhập số!");
+            }
+        }
+    }
     private void settingsMenu() {
         boolean back = false;
         while (!back) {
@@ -173,6 +201,62 @@ public class AdminUI {
             }
         } catch (NumberFormatException e) {
             System.out.println("Lỗi: ID sản phẩm và Giá bán phải là số!");
+        }
+    }
+    private void handleAddEmployee() {
+        System.out.println("\n--- THÊM NHÂN VIÊN MỚI ---");
+        try {
+            System.out.print("Nhập Username (Tên đăng nhập bắt buộc): ");
+            String username = scanner.nextLine().trim();
+            
+            System.out.print("Nhập Mật khẩu (Bắt buộc): ");
+            String password = scanner.nextLine().trim();
+            
+            System.out.print("Nhập Họ và Tên (Bắt buộc): ");
+            String fullName = scanner.nextLine().trim();
+            
+            System.out.print("Nhập Số điện thoại (Nhấn Enter để bỏ qua): ");
+            String phone = scanner.nextLine().trim();
+            
+            System.out.print("Nhập Email (Nhấn Enter để bỏ qua): ");
+            String email = scanner.nextLine().trim();
+            
+            System.out.print("Nhập Chức vụ (ADMIN hoặc STAFF): ");
+            String role = scanner.nextLine().trim();
+            if (role.isEmpty()) role = "STAFF"; // Default nếu không nhập
+
+            System.out.print("Nhập mức lương (VNĐ - Nhập 0 nếu chưa có): ");
+            String salaryInput = scanner.nextLine().trim();
+            double salary = salaryInput.isEmpty() ? 0 : Double.parseDouble(salaryInput);
+
+            // Gọi logic từ AdminService
+            String result = adminService.addNewEmployee(username, password, fullName, phone, email, role, salary);
+            
+            if (result.equals("Thành công")) {
+                System.out.println("Đã tạo tài khoản thành công cho: " + fullName);
+            } else {
+                System.out.println("" + result);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Lỗi: Mức lương phải là số!");
+        }
+    }
+    
+    // Hàm xử lý khóa tài khoản
+    private void handleLockEmployee() {
+        System.out.println("\n--- KHÓA TÀI KHOẢN NHÂN VIÊN ---");
+        try {
+            System.out.print("Nhập ID nhân viên cần khóa: ");
+            int empId = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Xác nhận khóa tài khoản này? (Y/N): ");
+            if (scanner.nextLine().equalsIgnoreCase("Y")) {
+                int adminId = SessionManager.getCurrentUser().getId();
+                String result = adminService.lockEmployeeAccount(empId, adminId);
+                System.out.println(result.equals("Thành công") ? "✅ Đã khóa!" : "❌ " + result);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Lỗi: ID phải là số!");
         }
     }
 }

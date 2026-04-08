@@ -2,6 +2,7 @@ package ct246_ql_cuahang_taphoa.service;
 
 import ct246_ql_cuahang_taphoa.dao.ProductDAO;
 import ct246_ql_cuahang_taphoa.model.Product;
+import ct246_ql_cuahang_taphoa.dao.EmployeeDAO;
 
 public class AdminService {
     private ProductDAO productDAO = new ProductDAO();
@@ -43,4 +44,37 @@ public class AdminService {
         boolean success = productDAO.updatePrice(ProductId, newPrice);
         return success ? "Thành công" : "Lỗi: Không thể cập nhật vào cơ sở dữ liệu.";
     } 
+    
+    private EmployeeDAO employeeDAO = new EmployeeDAO();
+    // Thêm tài khoản nhân viên mới
+    public String addNewEmployee(String username, String password, String fullName, 
+                                 String phone, String email, String role, double salary) {
+        // Kiểm tra dữ liệu bắt buộc (NOT NULL)
+        if (username.isEmpty() || password.isEmpty() || fullName.isEmpty()) {
+            return "Lỗi: Tên đăng nhập, mật khẩu và họ tên không được để trống!";
+        }
+        
+        // Kiểm tra Role có hợp lệ không
+        if (!role.equalsIgnoreCase("ADMIN") && !role.equalsIgnoreCase("STAFF")) {
+            return "Lỗi: Chức vụ chỉ có thể là ADMIN hoặc STAFF!";
+        }
+        
+        // Kiểm tra lương
+        if (salary < 0) {
+            return "Lỗi: Mức lương không thể là số âm!";
+        }
+
+        boolean success = employeeDAO.insertEmployee(username, password, fullName, phone, email, role, salary);
+        return success ? "Thành công" : "Lỗi: Không thể thêm nhân viên (Có thể Username đã tồn tại).";
+    }
+    
+    // Khóa tài khoản nhân viên
+    public String lockEmployeeAccount(int employeeId, int currentAdminId) {
+        if (employeeId == currentAdminId) {
+            return "Lỗi: Bạn không thể tự khóa tài khoản của chính mình!";
+        }
+
+        boolean success = employeeDAO.lockEmployee(employeeId);
+        return success ? "Thành công" : "Lỗi: Không tìm thấy nhân viên với ID này.";
+    }
 }
