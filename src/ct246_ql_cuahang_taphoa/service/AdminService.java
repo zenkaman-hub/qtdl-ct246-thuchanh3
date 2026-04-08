@@ -1,5 +1,6 @@
 package ct246_ql_cuahang_taphoa.service;
 
+import ct246_ql_cuahang_taphoa.dao.EmployeeDAO;
 import ct246_ql_cuahang_taphoa.dao.ProductDAO;
 import ct246_ql_cuahang_taphoa.model.Product;
 import ct246_ql_cuahang_taphoa.dao.InventoryLogDAO;
@@ -78,6 +79,7 @@ public class AdminService {
 
         boolean success = employeeDAO.lockEmployee(employeeId);
         return success ? "Thành công" : "Lỗi: Không tìm thấy nhân viên với ID này.";
+    }
     // Hàm cảnh báo sắp hết hàng
     public void checkLowStockWarning() {
         // Gọi productDAO.getLowStockProducts() để lấy danh sách sản phẩm sắp hết từ thủ tục
