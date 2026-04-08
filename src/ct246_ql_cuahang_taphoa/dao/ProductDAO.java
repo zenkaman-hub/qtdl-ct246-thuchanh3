@@ -6,9 +6,13 @@ import ct246_ql_cuahang_taphoa.config.DatabaseConfig;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDAO {
+    
     public boolean addProduct(Product product) {
         // SQL thêm dữ liệu vào bảng product
         String sql = "INSERT INTO products (barcode, product_name, category_id, supplier_id, unit, cost_price, selling_price, stock_quantity) VALUES (?, ?, ?, ?,? , ?, ?, ?)";
@@ -69,4 +73,31 @@ public class ProductDAO {
         }
         return -1; // Trả về -1 nếu không tìm thấy sản phẩm
     }
+    public List<Product> getLowStockProducts() {
+        List<Product> lowStockList = new ArrayList<>();
+        // Gọi thủ tục sp_GetLowStockProducts()
+        String sql = "{CALL sp_GetLowStockProducts()}";
+        try (Connection conn = DatabaseConfig.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            // Duyệt qua từng dòng kết quả trả về từ Procedure
+            while (rs.next()) {
+                Product p = new Product(
+                    rs.getString("barcode"),
+                    rs.getString("product_name"),
+                    rs.getInt("category_id"),
+                    rs.getInt("supplier_id"),
+                    rs.getString("unit"),    
+                    rs.getDouble("cost_price"),
+                    rs.getDouble("selling_price"),
+                    rs.getInt("stock_quantity")
+                );
+                lowStockList.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi lấy danh sách sắp hết hàng: " + e.getMessage());
+        }
+        return lowStockList;
+    }
+    
 }
