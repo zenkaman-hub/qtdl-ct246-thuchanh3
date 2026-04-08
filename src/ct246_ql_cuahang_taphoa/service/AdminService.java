@@ -21,4 +21,28 @@ public class AdminService {
             System.out.println(" Thêm sản phẩm thất bại. Vui lòng kiểm tra lại.");
         }
     }
+    // Hàm cảnh báo sắp hết hàng
+    public void checkLowStockWarning() {
+        // Gọi productDAO.getLowStockProducts() để lấy danh sách sản phẩm sắp hết từ thủ tục
+        var lowStockProducts = productDAO.getLowStockProducts();
+        System.out.println("\n === BÁO CÁO CẢNH BÁO KHO HÀNG === ");
+        
+        if (lowStockProducts.isEmpty()) {
+            System.out.println("Không có sản phẩm nào sắp hết!");
+        } else {
+            System.out.println("                               NHỮNG MẶT HÀNG SẮP HẾT");
+            System.out.println("----------------------------------------------------------------------------------");
+            System.out.printf("| %-15s | %-25s | %-10s | %-15s |\n", "Mã vạch", "Tên sản phẩm", "Đơn vị", "Tồn kho hiện tại");
+            System.out.println("----------------------------------------------------------------------------------");
+            
+            for (Product p : lowStockProducts) {
+                System.out.printf("| %-15s | %-25s | %-10s | %-15d |\n", 
+                                  p.getBarcode(), 
+                                  p.getProductName(), 
+                                  p.getUnit(), 
+                                  p.getStockQuantity());
+            }
+            System.out.println("----------------------------------------------------------------------------------");
+        }
+    }
 }
