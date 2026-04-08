@@ -66,6 +66,7 @@ public class AdminUI {
             System.out.println("\n--- QUẢN LÝ SẢN PHẨM & KHO ---");
             System.out.println("1. Thêm sản phẩm mới");
             System.out.println("2. Cảnh báo sắp hết hàng");
+            System.out.println("3. Xem lịch sử biến động kho");
             System.out.println("0. Quay lại menu chính");
             System.out.print("Chọn chức năng: ");
             try {
@@ -76,6 +77,9 @@ public class AdminUI {
                         break;
                     case 2:
                         adminService.checkLowStockWarning(); //Gọi hàm hiển thị sản phẩm hết hàng
+                        break;
+                    case 3:
+                        adminService.showInventoryLogs();
                         break;
                     case 0:
                         back = true; // Thoát vòng lặp, tự động trở về menu chính

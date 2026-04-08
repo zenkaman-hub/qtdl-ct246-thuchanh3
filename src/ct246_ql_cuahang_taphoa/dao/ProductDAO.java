@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO {
+    
     public boolean addProduct(Product product) {
         // SQL thêm dữ liệu vào bảng product
         String sql = "INSERT INTO products (barcode, product_name, category_id, supplier_id, unit, cost_price, selling_price, stock_quantity) VALUES (?, ?, ?, ?,? , ?, ?, ?)";
@@ -65,4 +66,5 @@ public class ProductDAO {
         }
         return lowStockList;
     }
+    
 }
