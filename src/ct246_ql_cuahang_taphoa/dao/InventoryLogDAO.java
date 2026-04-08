@@ -15,11 +15,11 @@ public class InventoryLogDAO {
         List<InventoryLog> list = new ArrayList<>();
         
         // Lệnh JOIN 3 bảng products, employee, inventorylog: Lấy 50 lịch sử mới nhất
-        String sql = "SELECT i.log_id, p.product_name, e.username, i.change_quantity, i.reason, i.created_at " +
+        String sql = "SELECT i.log_id, p.product_name, e.username, i.change_quantity, i.reason, i.log_date " +
                      "FROM inventory_logs i " +
-                     "JOIN products p ON i.barcode = p.barcode " +
+                     "JOIN products p ON i.product_id = p.product_id " +
                      "JOIN employees e ON i.employee_id = e.employee_id " +
-                     "ORDER BY i.created_at DESC LIMIT 50";
+                     "ORDER BY i.log_date DESC LIMIT 50";
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -29,10 +29,10 @@ public class InventoryLogDAO {
                 InventoryLog log = new InventoryLog(
                     rs.getInt("log_id"),
                     rs.getString("product_name"),
-                    rs.getString("full_name"),
+                    rs.getString("username"),
                     rs.getInt("change_quantity"),
                     rs.getString("reason"),
-                    rs.getTimestamp("created_at")
+                    rs.getTimestamp("i.log_date")
                 );
                 list.add(log);
             }

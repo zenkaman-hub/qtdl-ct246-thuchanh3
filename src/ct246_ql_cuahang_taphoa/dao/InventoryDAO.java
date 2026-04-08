@@ -1,18 +1,10 @@
 package ct246_ql_cuahang_taphoa.dao;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author latuo
- */
 
 import ct246_ql_cuahang_taphoa.config.DatabaseConfig;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 public class InventoryDAO {
     public boolean restockTransaction(int productId, int employeeId, int quantity) {
         Connection conn = null;
