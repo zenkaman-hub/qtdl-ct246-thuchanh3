@@ -45,6 +45,7 @@ public class AdminUI {
                         break;
                     case 4:
                         System.out.println("Đang mở chức năng Thiết lập...");
+                        settingsMenu();
                         break;
                     case 0:
                         System.out.println("Đang đăng xuất...");
@@ -122,7 +123,56 @@ public class AdminUI {
             System.out.println("=> Đã gửi yêu cầu thêm sản phẩm: " + name);
             
         } catch (NumberFormatException e) {
-            System.out.println("❌ Lỗi nhập liệu: Giá tiền hoặc ID, Số lượng phải là số!");
+            System.out.println("Lỗi nhập liệu: Giá tiền hoặc ID, Số lượng phải là số!");
+        }
+    }
+    
+    private void settingsMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n--- THIẾT LẬP HỆ THỐNG ---");
+            System.out.println("1. Đổi giá sản phẩm");
+            System.out.println("0. Quay lại menu chính");
+            System.out.print("Chọn chức năng: ");
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        handleChangePrice(); // Gọi form đổi giá
+                        break;
+                    case 0:
+                        back = true; // Quay lại menu trước đó
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi: Vui lòng nhập một số nguyên!");
+            }
+        }
+    }
+    
+    // Hàm xử lý logic nhập liệu đổi giá
+    private void handleChangePrice() {
+        System.out.println("\n--- ĐỔI GIÁ SẢN PHẨM ---");
+        try {
+            System.out.print("Nhập ID sản phẩm cần đổi giá: ");
+            int productId = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Nhập giá bán mới (VNĐ): ");
+            double newPrice = Double.parseDouble(scanner.nextLine());
+
+            // Gọi service và nhận thông báo kết quả
+            String result = adminService.changeProductPrice(productId, newPrice);
+
+            if (result.equals("Thành công")) {
+                System.out.println("" + result);
+            } else {
+                // Hiển thị các thông báo lỗi cụ thể (ví dụ: Giá bán thấp hơn giá nhập)
+                System.out.println("" + result);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Lỗi: ID sản phẩm và Giá bán phải là số!");
         }
     }
 }

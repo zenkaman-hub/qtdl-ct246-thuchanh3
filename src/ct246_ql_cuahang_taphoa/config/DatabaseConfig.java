@@ -20,7 +20,7 @@ public class DatabaseConfig {
             
             // Thực hiện kết nối
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("-> KET NOI MYSQL THANH CONG!");
+//            System.out.println("-> KET NOI MYSQL THANH CONG!");
             
         } catch (ClassNotFoundException e) {
             System.out.println("Loi: Chua them thu vien MySQL Connector (file .jar) vao Libraries!");

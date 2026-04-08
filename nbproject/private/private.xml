@@ -10,9 +10,10 @@
             <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/util/SessionManager.java</file>
             <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/model/Employee.java</file>
             <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/service/InventoryService.java</file>
-            <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/config/DatabaseConfig.java</file>
             <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/ProductDAO.java</file>
             <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/InventoryLogDAO.java</file>
+            <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/InventoryDAO.java</file>
+            <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/config/DatabaseConfig.java</file>
         </group>
     </open-files>
 </project-private>
