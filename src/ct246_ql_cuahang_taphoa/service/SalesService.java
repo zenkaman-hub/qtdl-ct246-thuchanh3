@@ -1,13 +1,78 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package ct246_ql_cuahang_taphoa.service;
 
-/**
- *
- * @author vothanhdatthinh
- */
+package ct246_ql_cuahang_taphoa.service;
+import ct246_ql_cuahang_taphoa.dao.ProductDAO;
+import ct246_ql_cuahang_taphoa.model.CartItem;
+import ct246_ql_cuahang_taphoa.model.Product;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class SalesService {
-    
+    private ProductDAO productDAO = new ProductDAO(); 
+    // Hashmap chứa các sản phẩm trong giỏ hàng
+    private Map<Integer, CartItem> cart = new HashMap<>();
+
+    public void addToCart(int id, int quantity) {
+        if (quantity <= 0) {
+            System.out.println("Số lượng phải lớn hơn 0!");
+            return;
+        }
+
+        Product product = productDAO.getProductById(id);
+        if (product == null) {
+            System.out.println("Lỗi: Không tìm thấy sản phẩm với id '" + id + "'");
+            return;
+        }
+
+        // Lấy số lượng hiện của sản phẩm đó có trong giỏ 
+        int currentQtyInCart = cart.containsKey(id) ? cart.get(id).getQuantity() : 0;
+
+        if (product.getStockQuantity() < (currentQtyInCart + quantity)) {
+            System.out.println("Lỗi: Kho không đủ! Chỉ còn " + product.getStockQuantity() + " sản phẩm.");
+            return;
+        }
+
+        if (cart.containsKey(id)) {
+            CartItem item = cart.get(id);
+            item.setQuantity(item.getQuantity() + quantity);
+        } else {
+            cart.put(id, new CartItem(product, quantity));
+        }
+        System.out.println("Đã thêm " + quantity + " x [" + product.getProductName() + "] vào giỏ.");
+    }
+    //Xóa giỏ hàng hiện tại
+    public void clearCart() {
+        cart.clear();
+        System.out.println("🗑️ Đã hủy và xóa trắng giỏ hàng!");
+    }
+    //Hiển thị giỏ hàng
+    public void showCart() {
+        if (cart.isEmpty()) {
+            System.out.println("\n[Giỏ hàng đang trống]");
+            return;
+        }
+
+        System.out.println("\n=== GIỎ HÀNG HIỆN TẠI ===");
+        System.out.printf("%-10s | %-25s | %-10s | %-15s | %-15s\n", "ID SP", "Tên sản phẩm", "SL", "Đơn giá", "Thành tiền");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        
+        double total = 0;
+        // Duyệt qua Map có key là Integer
+        for (Map.Entry<Integer, CartItem> entry : cart.entrySet()) {
+            int productId = entry.getKey();
+            CartItem item = entry.getValue();
+            
+            System.out.printf("%-10d | %-25s | %-10d | %-15.0f | %-15.0f\n", 
+                    productId, 
+                    item.getProduct().getProductName(), 
+                    item.getQuantity(), 
+                    item.getProduct().getSellingPrice(), 
+                    item.getSubTotal());
+            total += item.getSubTotal();
+        }
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.printf("TỔNG TIỀN TẠM TÍNH: %.0f VNĐ\n", total);
+    }
+    // Đổi kiểu trả về sang Integer
+    public Map<Integer, CartItem> getCart() { return cart; }
 }

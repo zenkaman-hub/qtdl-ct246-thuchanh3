@@ -2,6 +2,7 @@ package ct246_ql_cuahang_taphoa.model;
 
 
 public class Product {
+    private String id;
     private String barcode;
     private String productName;
     private int categoryId;

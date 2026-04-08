@@ -100,4 +100,30 @@ public class ProductDAO {
         return lowStockList;
     }
     
+    // Tìm sản phẩm theo id
+    public Product getProductById(int id) {
+        String sql = "SELECT * FROM products WHERE product_id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return new Product(
+                    rs.getString("barcode"),
+                    rs.getString("product_name"),
+                    rs.getInt("category_id"),
+                    rs.getInt("supplier_id"),
+                    rs.getString("unit"),
+                    rs.getDouble("cost_price"),
+                    rs.getDouble("selling_price"),
+                    rs.getInt("stock_quantity")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi truy vấn sản phẩm: ");
+        }
+        return null; // Không tìm thấy
+    }
 }

@@ -7,10 +7,14 @@ package ct246_ql_cuahang_taphoa.ui;
 import ct246_ql_cuahang_taphoa.util.SessionManager;
 import java.util.Scanner;
 import ct246_ql_cuahang_taphoa.service.InventoryService;
+import ct246_ql_cuahang_taphoa.service.SalesService;
 
 public class StaffUI {
     private Scanner scanner = new Scanner(System.in);
     private InventoryService inventoryService = new InventoryService();
+    private SalesService salesService = new SalesService();
+    
+    
     public void display() {
         boolean running = true;
         while (running) {
@@ -28,8 +32,7 @@ public class StaffUI {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Đang mở màn hình Bán hàng...");
-                    // Gọi hàm từ SalesService tại đây
+                    handleSalesPOS();
                     break;
                 case 2:
                     System.out.println("Đang kiểm tra kho...");
@@ -77,6 +80,43 @@ public class StaffUI {
             System.out.println("Lỗi: ID sản phẩm và số lượng phải là số!");
         } catch (Exception e) {
             System.out.println("Đã xảy ra lỗi hệ thống: " + e.getMessage());
+        }
+    }
+    private void handleSalesPOS() {
+        boolean selling = true;
+        while (selling) {
+            // Luôn in giỏ hàng ở đầu mỗi lần lặp để nhân viên dễ nhìn
+            salesService.showCart(); 
+            
+            System.out.println("\n[THAO TÁC HÓA ĐƠN]");
+            System.out.println("1. Nhập mã vạch thêm vào giỏ");
+            System.out.println("2. Hủy giỏ hàng (Khách đổi ý)");
+            System.out.println("3. THANH TOÁN & IN HÓA ĐƠN");
+            System.out.println("0. Tạm ngưng (Quay lại menu chính)");
+            System.out.print("Chọn thao tác: ");
+            
+            int action = Integer.parseInt(scanner.nextLine()); 
+                switch (action) {
+                    case 1:
+                        System.out.print("Nhập id san pham : ");
+                        int id = Integer.parseInt(scanner.nextLine());
+                        System.out.print("Nhập số lượng: ");
+                        int qty = Integer.parseInt(scanner.nextLine());
+                        salesService.addToCart(id, qty);
+                        break;
+                    case 2:
+                        salesService.clearCart();
+                        break;
+                    case 3:
+                        System.out.println("Đang chuyển sang chức năng Thanh toán (Transaction)...");
+                        // Ở bước tiếp theo chúng ta sẽ gọi hàm Checkout Transaction tại đây!
+                        break;
+                    case 0:
+                        selling = false;
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ.");
+                }
         }
     }
 }
