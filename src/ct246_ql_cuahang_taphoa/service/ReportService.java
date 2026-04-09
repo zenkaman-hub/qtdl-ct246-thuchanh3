@@ -16,7 +16,7 @@ public class ReportService {
     public double[] getDailyReport(String dateString) {
         try {
             Date sqlDate;
-            // Nếu người dùng không nhập gì (nhấn Enter), tự động lấy ngày hôm nay
+            // Nếu không nhập gì (Enter), tự động lấy ngày hôm nay
             if (dateString == null || dateString.trim().isEmpty()) {
                 sqlDate = Date.valueOf(LocalDate.now());
             } else {
