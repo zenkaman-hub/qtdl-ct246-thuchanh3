@@ -9,13 +9,13 @@ import ct246_ql_cuahang_taphoa.util.SessionManager;
 import java.util.Scanner;
 import ct246_ql_cuahang_taphoa.service.InventoryService;
 import ct246_ql_cuahang_taphoa.service.SalesService;
+import ct246_ql_cuahang_taphoa.dao.CustomerDAO;
 
 public class StaffUI {
     private Scanner scanner = new Scanner(System.in);
     private InventoryService inventoryService = new InventoryService();
     private SalesService salesService = new SalesService();
     private CustomerService customerService = new CustomerService();
-    
     
     public void display() {
         boolean running = true;
@@ -87,6 +87,7 @@ public class StaffUI {
         boolean selling = true;
         while (selling) {
             // Luôn in giỏ hàng ở đầu mỗi lần lặp để nhân viên dễ nhìn
+            System.out.println("                             === Giỏ hàng hiện tại ===");
             salesService.showCart(); 
             
             System.out.println("\n[THAO TÁC HÓA ĐƠN]");
@@ -109,8 +110,7 @@ public class StaffUI {
                         salesService.clearCart();
                         break;
                     case 3:
-                        System.out.println("Đang chuyển sang chức năng Thanh toán (Transaction)...");
-                        // Ở bước tiếp theo chúng ta sẽ gọi hàm Checkout Transaction tại đây!
+                        handleCheckout();
                         break;
                     case 0:
                         selling = false;
@@ -181,5 +181,56 @@ public class StaffUI {
             System.out.println("Lỗi: ID sản phẩm phải là số!");
         }
     }
-  
+    
+    
+    // Hàm hiển thị thanh toán
+    private void handleCheckout() {
+        System.out.println("\n--- TIẾN HÀNH THANH TOÁN ---");
+        
+        // Nhập id khách hàng
+        System.out.print("Nhập ID Khách hàng (Nhấn Enter nếu là Khách vãng lai): ");
+        String input = scanner.nextLine().trim();
+        int customerId = (input.isEmpty() || input.equals("0")) ? 1 : Integer.parseInt(input);
+
+        int usedPoints = 0;
+
+        // Xử lý khách thành viên
+        if (customerId != 1) {
+            CustomerDAO customerDAO = new CustomerDAO();
+            int currentPoints = customerDAO.getCustomerPoints(customerId);
+            
+            System.out.println("========================================");
+            System.out.println("Khách hàng thành viên ID: " + customerId);
+            System.out.println("SỐ ĐIỂM HIỆN TẠI: " + currentPoints + " điểm (Tương đương " + (currentPoints) + " VNĐ)");
+            System.out.println("========================================");
+            
+            if (currentPoints > 0) {
+                while (true) {
+                    System.out.print("Khách muốn sử dụng bao nhiêu điểm? (Nhập 0 nếu không dùng): ");
+                    try {
+                        usedPoints = Integer.parseInt(scanner.nextLine());
+                        if (usedPoints >= 0 && usedPoints <= currentPoints) {
+                            break;
+                        } else {
+                            System.out.println("Lỗi: Điểm nhập vào lớn hơn số điểm đang có hoặc bị âm!");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Lỗi: Vui lòng nhập một số nguyên!");
+                    }
+                }
+            } else {
+                System.out.println("Khách hàng chưa có điểm để sử dụng.");
+            }
+        } else {
+            System.out.println("Khách vãng lai không được tích/đổi điểm).");
+        }
+
+        double discountAmount = 0;
+        
+        // Lấy ID nhân viên đang đăng nhập
+        int empId = SessionManager.getCurrentUser().getId(); 
+
+        // Chuyển thông tin qua Service để xử lý Transaction
+        salesService.checkout(empId, customerId, discountAmount, usedPoints);
+    }
 }

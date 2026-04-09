@@ -45,4 +45,47 @@ public class CustomerDAO {
         
         return customerInfo;
     }
+    //Lấy điểm khách hàng dựa trên id
+    public int getCustomerPoints(int customerId) {
+        // id = 1 là Khách vãng lai, không có điểm
+        if (customerId == 1) {
+            return 0; 
+        }
+        
+        String sql = "SELECT points FROM customers WHERE customer_id = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt("points"); // Lấy cột điểm trả về
+            }
+        } catch (SQLException e) {
+            System.out.println(" Lỗi khi lấy điểm khách hàng: " + e.getMessage());
+        }
+        return 0; 
+    }
+    // Hàm lấy hạng của khách hàng dựa vào ID
+    public String getCustomerTier(int customerId) {
+        if (customerId == 1) return "Khách vãng lai";
+        
+        String sql = "SELECT fn_GetCustomerTier(points) AS tier FROM customers WHERE customer_id = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getString("tier");
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi lấy hạng khách hàng: " + e.getMessage());
+        }
+        return "Thường";
+    }
 }
