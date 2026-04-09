@@ -3,23 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/Ct246_QL_CuaHang_TapHoa.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/config/DatabaseConfig.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/ProductDAO.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/service/AdminService.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/ui/AdminUI.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/model/Product.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/InventoryLogDAO.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/model/InventoryLog.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/InventoryDAO.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/ui/StaffUI.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/service/InventoryService.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/model/Category.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/model/Customer.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/model/Employee.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/EmployeeDAO.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/ui/LoginUI.java</file>
-            <file>file:/D:/GitHub/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/service/SalesService.java</file>
+            <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/dao/CustomerDAO.java</file>
+            <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/service/CustomerService.java</file>
+            <file>file:/D:/qtdl-ct246-thuchanh3/src/ct246_ql_cuahang_taphoa/ui/StaffUI.java</file>
         </group>
     </open-files>
 </project-private>

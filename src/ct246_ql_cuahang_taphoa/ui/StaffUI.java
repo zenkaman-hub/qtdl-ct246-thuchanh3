@@ -4,6 +4,7 @@
  */
 package ct246_ql_cuahang_taphoa.ui;
 
+import ct246_ql_cuahang_taphoa.service.CustomerService;
 import ct246_ql_cuahang_taphoa.util.SessionManager;
 import java.util.Scanner;
 import ct246_ql_cuahang_taphoa.service.InventoryService;
@@ -13,6 +14,7 @@ public class StaffUI {
     private Scanner scanner = new Scanner(System.in);
     private InventoryService inventoryService = new InventoryService();
     private SalesService salesService = new SalesService();
+    private CustomerService customerService = new CustomerService();
     
     
     public void display() {
@@ -23,8 +25,8 @@ public class StaffUI {
             // Sửa lại đoạn in Menu trong StaffUI.java
             System.out.println("1. Tạo hóa đơn mới (Bán hàng)");
             System.out.println("2. Kiểm tra giá & Tồn kho");
-            System.out.println("3. Nhập hàng vào kho");       // Sửa lại dòng này
-            System.out.println("4. Tra cứu thông tin khách hàng"); // Thêm dòng này để khớp với case 4
+            System.out.println("3. Nhập hàng vào kho");   
+            System.out.println("4. Tra cứu thông tin khách hàng"); 
             System.out.println("0. Đăng xuất");
             System.out.print("Vui lòng chọn chức năng: ");
             
@@ -43,7 +45,7 @@ public class StaffUI {
                     break;
                 case 4:
                     System.out.println("Đang mở màn hình Tra cứu khách hàng...");
-                    // TODO: Gọi hàm từ CustomerService tại đây
+                    handleCustomerLookup();
                     break;
                 case 0:
                     System.out.println("Đang đăng xuất...");
@@ -65,7 +67,6 @@ public class StaffUI {
             int quantity = Integer.parseInt(scanner.nextLine());
 
             // Lấy ID nhân viên đang thực hiện thao tác từ Session hiện tại
-            // Giả định class Employee (hoặc User) của bạn có hàm getEmployeeId()
             int employeeId = SessionManager.getCurrentUser().getId(); 
 
             // Gọi service để thực hiện Transaction
@@ -117,6 +118,38 @@ public class StaffUI {
                     default:
                         System.out.println("Lựa chọn không hợp lệ.");
                 }
+        }
+    }
+    
+    
+    private void handleCustomerLookup() {
+        System.out.println("\n--- TRA CỨU THÔNG TIN KHÁCH HÀNG ---");
+        System.out.print("Nhập số điện thoại khách hàng: ");
+        String phone = scanner.nextLine().trim();
+        
+        Object[] customerData = customerService.searchCustomer(phone);
+        
+        if (customerData != null) {
+            System.out.println("\n----------------------------------------");
+            System.out.println(" THÔNG TIN THÀNH VIÊN");
+            System.out.println("----------------------------------------");
+            System.out.println(" Tên khách hàng   : " + customerData[0]);
+            System.out.println(" Điểm tích lũy    : " + customerData[1] + " điểm");
+            System.out.println(" Hạng thành viên  : " + customerData[2]);
+            System.out.println(" Ngày mua gần nhất: " + customerData[3]);
+            System.out.println("----------------------------------------");
+            
+            if ("VIP".equals(customerData[2])) {
+                System.out.println("Đây là khách hàng VIP, áp dụng giảm giá 10% khi thanh toán!");
+            }
+        } else {
+            // Nếu format đúng nhưng không tìm thấy trong DB thì customerData vẫn null
+            // Tuy nhiên, do Service đã chặn null nếu sai format, 
+            // ta cần check xem lỗi từ định dạng hay do không có thật.
+            if (phone.matches("\\d{10}")) {
+                System.out.println(" Không tìm thấy khách hàng nào với số điện thoại: " + phone);
+                System.out.println("=> Gợi ý: Hãy tạo mới khách hàng lúc thanh toán!");
+            }
         }
     }
 }
