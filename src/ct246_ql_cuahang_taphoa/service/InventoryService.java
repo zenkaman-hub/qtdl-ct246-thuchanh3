@@ -23,4 +23,14 @@ public class InventoryService {
         // Gọi DAO để thực hiện Transaction cập nhật CSDL
         return inventoryDAO.restockTransaction(productId, employeeId, quantity);
     }
+    public String[] checkProduct(int productId) {
+        if (productId <= 0) {
+            System.out.println("Lỗi: ID sản phẩm không hợp lệ!");
+            return null;
+        }
+        return inventoryDAO.getProductInfo(productId);
+    }
+    
+    
+    
 }

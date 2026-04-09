@@ -38,9 +38,9 @@ public class StaffUI {
                     break;
                 case 2:
                     System.out.println("Đang kiểm tra kho...");
+                    handleCheckInventory();
                     break;
                 case 3:
-                    // Gọi hàm xử lý nhập hàng đã được tách riêng bên dưới
                     handleRestock();
                     break;
                 case 4:
@@ -152,6 +152,34 @@ public class StaffUI {
             }
         }
     }
+    private void handleCheckInventory() {
+        System.out.println("\n--- KIỂM TRA GIÁ & TỒN KHO ---");
+        try {
+            System.out.print("Nhập ID sản phẩm cần kiểm tra: ");
+            int productId = Integer.parseInt(scanner.nextLine());
+
+            // Gọi qua Service
+            String[] info = inventoryService.checkProduct(productId);
+
+            if (info != null) {
+                System.out.println("\n TÌM THẤY SẢN PHẨM:");
+                System.out.println("--------------------------------");
+                System.out.println("Tên sản phẩm : " + info[0]);
+                System.out.println("Giá bán      : " + info[1] + " VNĐ");
+                
+                int stock = Integer.parseInt(info[2]);
+                if (stock > 0) {
+                    System.out.println("Tồn kho      : " + stock + " (Sẵn sàng bán)");
+                } else {
+                    System.out.println("Tồn kho       : " + stock + " (ĐÃ HẾT HÀNG!)");
+                }
+                System.out.println("--------------------------------");
+            } else {
+                System.out.println("Không tìm thấy sản phẩm nào có ID: " + productId);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Lỗi: ID sản phẩm phải là số!");
+        }
+    }
+  
 }
-
-

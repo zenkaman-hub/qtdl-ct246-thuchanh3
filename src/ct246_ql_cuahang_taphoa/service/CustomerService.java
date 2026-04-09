@@ -10,7 +10,7 @@ public class CustomerService {
     private CustomerDAO customerDAO = new CustomerDAO();
     
     public Object[] searchCustomer(String phone) {
-        // Kiểm tra cơ bản: Số điện thoại không được rỗng và chứa 10-11 chữ số
+        // Kiểm tra cơ bản: Số điện thoại không được rỗng và chứa 10 số
         if (phone == null || phone.trim().isEmpty() || !phone.matches("\\d{10}")) {
             System.out.println("Lỗi: Số điện thoại không hợp lệ (phải đúng 10 số).");
             return null;

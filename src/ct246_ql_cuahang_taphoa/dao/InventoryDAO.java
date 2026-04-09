@@ -37,4 +37,27 @@ public class InventoryDAO {
         
         return isSuccess;
     }
+    public String[] getProductInfo(int productId) {
+        String[] productInfo = null;
+        String sql = "{CALL sp_CheckProductInfo(?)}"; // Gọi Procedure
+
+        try (java.sql.Connection conn = DatabaseConfig.getConnection();
+             java.sql.CallableStatement cstmt = conn.prepareCall(sql)) {
+            
+            cstmt.setInt(1, productId);
+            
+            try (java.sql.ResultSet rs = cstmt.executeQuery()) {
+                if (rs.next()) {
+                    productInfo = new String[3];
+                    productInfo[0] = rs.getString("product_name");
+                    // Chuyển số thành chuỗi để đưa vào mảng cho tiện
+                    productInfo[1] = String.valueOf(rs.getDouble("selling_price")); 
+                    productInfo[2] = String.valueOf(rs.getInt("stock_quantity"));
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            System.out.println("Lỗi truy vấn cơ sở dữ liệu: " + e.getMessage());
+        }
+        return productInfo;
+    }
 }
