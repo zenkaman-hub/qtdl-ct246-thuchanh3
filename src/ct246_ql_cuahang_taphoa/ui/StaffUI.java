@@ -87,7 +87,7 @@ public class StaffUI {
         boolean selling = true;
         while (selling) {
             // Luôn in giỏ hàng ở đầu mỗi lần lặp để nhân viên dễ nhìn
-            System.out.println("                             === Giỏ hàng hiện tại ===");
+            System.out.println("\n\n==== Giỏ hàng hiện tại ====");
             salesService.showCart(); 
             
             System.out.println("\n[THAO TÁC HÓA ĐƠN]");
@@ -229,8 +229,15 @@ public class StaffUI {
         
         // Lấy ID nhân viên đang đăng nhập
         int empId = SessionManager.getCurrentUser().getId(); 
+        System.out.print("Xác nhận thanh toán hóa đơn này? (Y/N): ");
+        String confirm = scanner.nextLine().trim().toUpperCase();
 
-        // Chuyển thông tin qua Service để xử lý Transaction
-        salesService.checkout(empId, customerId, discountAmount, usedPoints);
+        if (confirm.equals("Y")) {
+            // Chuyển thông tin qua Service để xử lý Transaction
+            salesService.checkout(empId, customerId, discountAmount, usedPoints);
+        } else {
+            System.out.println("Đã hủy lệnh thanh toán. Giỏ hàng vẫn được giữ nguyên.");
+        }
+        
     }
 }
