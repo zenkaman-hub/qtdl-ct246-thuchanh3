@@ -2,6 +2,7 @@ package ct246_ql_cuahang_taphoa.ui;
 
 import ct246_ql_cuahang_taphoa.util.SessionManager;
 import ct246_ql_cuahang_taphoa.service.AdminService;
+import ct246_ql_cuahang_taphoa.service.ReportService;
 
 import java.util.Scanner;
 import java.io.PrintStream;
@@ -9,6 +10,7 @@ import java.io.PrintStream;
 public class AdminUI {
     private Scanner scanner;
     private AdminService adminService = new AdminService();
+    private ReportService reportService = new ReportService();
     public AdminUI() {
         try {
             System.setOut(new java.io.PrintStream(System.out, true, "UTF-8"));
@@ -43,6 +45,7 @@ public class AdminUI {
                         break;
                     case 3:
                         System.out.println("Đang mở chức năng Báo cáo...");
+                        handleDailyReport();
                         break;
                     case 4:
                         System.out.println("Đang mở chức năng Thiết lập...");
@@ -261,6 +264,26 @@ public class AdminUI {
             }
         } catch (NumberFormatException e) {
             System.out.println("Lỗi: ID phải là số!");
+        }
+    }
+    
+    private void handleDailyReport() {
+        System.out.println("\n--- BÁO CÁO DOANH THU ---");
+        System.out.print("Nhập ngày muốn xem báo cáo (dd/MM/yyyy) hoặc nhấn Enter để xem hôm nay: ");
+        String dateInput = scanner.nextLine().trim();
+
+        // Gọi logic Service
+        double[] reportData = reportService.getDailyReport(dateInput);
+
+        // In kết quả
+        if (reportData != null) {
+            String reportDate = dateInput.isEmpty() ? "Hôm nay" : dateInput;
+            System.out.println("\n----------------------------------------");
+            System.out.println(" KẾT QUẢ KINH DOANH NGÀY: " + reportDate);
+            System.out.println("----------------------------------------");
+            System.out.printf(" Tổng doanh thu : %,.0f VNĐ\n", reportData[0]);
+            System.out.printf(" Tổng lợi nhuận : %,.0f VNĐ\n", reportData[1]);
+            System.out.println("----------------------------------------");
         }
     }
 }
