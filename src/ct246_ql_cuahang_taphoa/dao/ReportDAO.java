@@ -19,7 +19,7 @@ public class ReportDAO {
         try (Connection conn = DatabaseConfig.getConnection();
              CallableStatement cstmt = conn.prepareCall(sql)) {
             
-//            Truyền tham số IN (Ngày muốn báo cáo)
+//          Truyền tham số IN (Ngày muốn báo cáo)
             cstmt.setDate(1, reportDate);
             
             //Đăng ký tham số OUT (Doanh thu và Lợi nhuận)

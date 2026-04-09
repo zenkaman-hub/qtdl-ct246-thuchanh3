@@ -13,7 +13,7 @@ public class CustomerDAO {
     public Object[] getCustomerInfoByPhone(String phone) {
         Object[] customerInfo = null;
         
-        // Gọi Function fn_GetCustomerTier ngay trong câu SELECT
+        // Gọi Function fn_GetCustomerTier trong câu SELECT
         // Dùng LEFT JOIN để lỡ khách chưa mua lần nào vẫn hiện thông tin
         String sql = "SELECT c.customer_name, c.points, fn_GetCustomerTier(c.points) AS tier, "
                    + "MAX(o.order_date) AS last_purchase "

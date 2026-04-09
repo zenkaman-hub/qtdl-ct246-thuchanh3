@@ -24,7 +24,7 @@ public class DatabaseConfig {
         } catch (ClassNotFoundException e) {
             System.out.println("Loi: Chua them thu vien MySQL Connector (file .jar) vao Libraries!");
         } catch (SQLException e) {
-            System.out.println("Loi: Khong the ket noi! Ban da bat MySQL trong XAMPP chua? Hoac sai ten Database.");
+            System.out.println("Loi: Khong the ket noi!");
         }
         return connection;
     }
