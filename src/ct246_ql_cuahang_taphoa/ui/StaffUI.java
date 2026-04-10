@@ -28,7 +28,7 @@ public class StaffUI {
             System.out.println("3. Nhập hàng vào kho");   
             System.out.println("4. Tra cứu thông tin khách hàng"); 
             System.out.println("0. Đăng xuất");
-            System.out.print("Vui lòng chọn chức năng: ");
+            System.out.print("Chọn chức năng: ");
             
             int choice = Integer.parseInt(scanner.nextLine());
 
@@ -100,7 +100,7 @@ public class StaffUI {
             int action = Integer.parseInt(scanner.nextLine()); 
                 switch (action) {
                     case 1:
-                        System.out.print("Nhập id san pham : ");
+                        System.out.print("Nhập id sản phẩm : ");
                         int id = Integer.parseInt(scanner.nextLine());
                         System.out.print("Nhập số lượng: ");
                         int qty = Integer.parseInt(scanner.nextLine());

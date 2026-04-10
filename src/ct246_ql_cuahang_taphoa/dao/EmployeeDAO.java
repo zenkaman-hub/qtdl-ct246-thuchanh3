@@ -54,6 +54,7 @@ public class EmployeeDAO {
         }
     }
     
+    
     //Khóa tài khoản nhân viên 
     public boolean lockEmployee(int employeeId) {
         String sql = "UPDATE employees SET status = 'INACTIVE' WHERE employee_id = ?";
@@ -69,5 +70,23 @@ public class EmployeeDAO {
             System.out.println("Lỗi SQL khi khóa nhân viên: " + e.getMessage());
             return false;
         }
+    }
+    // Lấy username của nhân viên dựa vào ID
+    public String getEmployeeUsername(int employeeId) {
+        String sql = "SELECT username FROM employees WHERE employee_id = ?";
+        
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, employeeId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("username");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi SQL khi lấy username: " + e.getMessage());
+        }
+        return null; // Trả về null nếu không tìm thấy nhân viên
     }
 }

@@ -49,7 +49,7 @@ public class SalesService {
     //Xóa giỏ hàng hiện tại
     public void clearCart() {
         cart.clear();
-        System.out.println("🗑️ Đã hủy và xóa trắng giỏ hàng!");
+        System.out.println("Đã hủy và xóa trắng giỏ hàng!");
     }
     //Hiển thị giỏ hàng
     public void showCart() {

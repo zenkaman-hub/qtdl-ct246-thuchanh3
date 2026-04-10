@@ -71,14 +71,20 @@ public class AdminService {
         return success ? "Thành công" : "Lỗi: Không thể thêm nhân viên (Có thể Username đã tồn tại).";
     }
     
+    
     // Khóa tài khoản nhân viên
     public String lockEmployeeAccount(int employeeId, int currentAdminId) {
         if (employeeId == currentAdminId) {
             return "Lỗi: Bạn không thể tự khóa tài khoản của chính mình!";
         }
-
+        String targetUsername= employeeDAO.getEmployeeUsername(employeeId);
+        
+        if (targetUsername == null) {
+            return "Lỗi: Không tìm thấy nhân viên với ID này.";
+        }
+        
         boolean success = employeeDAO.lockEmployee(employeeId);
-        return success ? "Thành công" : "Lỗi: Không tìm thấy nhân viên với ID này.";
+        return success ? "Thành công:" + targetUsername : "Lỗi: Không tìm thấy nhân viên với ID này.";
     }
     // Hàm cảnh báo sắp hết hàng
     public void checkLowStockWarning() {

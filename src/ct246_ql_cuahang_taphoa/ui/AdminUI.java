@@ -114,7 +114,7 @@ public class AdminUI {
             System.out.print("Nhập ID Nhà cung cấp: (VD: 1-Công ty Coca-Cola VN / 2-Acecook Việt Nam / 3-Unilever / 4-Massan Group): ");
             int supId = Integer.parseInt(scanner.nextLine());
             
-            System.out.print("Nhập đơn vị tính (VD: Lon, Chai, Gói, Thùng): ");
+            System.out.print("Nhập đơn vị tính: ");
             String unit = scanner.nextLine();
             
             System.out.print("Nhập giá vốn (VNĐ): ");
@@ -201,7 +201,7 @@ public class AdminUI {
             String result = adminService.changeProductPrice(productId, newPrice);
 
             if (result.equals("Thành công")) {
-                System.out.println("" + result);
+                System.out.println("Cập nhật " + result  );
             } else {
                 // Hiển thị các thông báo lỗi cụ thể (ví dụ: Giá bán thấp hơn giá nhập)
                 System.out.println("" + result);
@@ -260,7 +260,14 @@ public class AdminUI {
             if (scanner.nextLine().equalsIgnoreCase("Y")) {
                 int adminId = SessionManager.getCurrentUser().getId();
                 String result = adminService.lockEmployeeAccount(empId, adminId);
-                System.out.println(result.equals("Thành công") ? "✅ Đã khóa!" : "❌ " + result);
+                
+                // Tách chuỗi để lấy phần username nếu kết quả bắt đầu bằng "Thành công"
+                if (result.startsWith("Thành công:")) {
+                    String username = result.split(":")[1]; // Lấy phần phía sau dấu hai chấm
+                    System.out.println("Đã khóa tài khoản: " + username);
+                } else {
+                    System.out.println("" + result);
+                }
             }
         } catch (NumberFormatException e) {
             System.out.println("Lỗi: ID phải là số!");
