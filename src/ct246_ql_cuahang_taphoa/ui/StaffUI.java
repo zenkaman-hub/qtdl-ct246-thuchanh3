@@ -12,11 +12,20 @@ import ct246_ql_cuahang_taphoa.service.SalesService;
 import ct246_ql_cuahang_taphoa.dao.CustomerDAO;
 
 public class StaffUI {
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
     private InventoryService inventoryService = new InventoryService();
     private SalesService salesService = new SalesService();
     private CustomerService customerService = new CustomerService();
     
+    public StaffUI() {
+        try {
+            System.setOut(new java.io.PrintStream(System.out, true, "UTF-8"));
+            this.scanner = new Scanner(System.in, "UTF-8"); // Gán bảng mã UTF-8 
+        } catch (java.io.UnsupportedEncodingException e) {
+            e.printStackTrace();
+            this.scanner = new Scanner(System.in); // Nếu lỗi thì dùng scanner thường
+        }
+    }
     public void display() {
         boolean running = true;
         while (running) {
@@ -96,7 +105,7 @@ public class StaffUI {
             System.out.println("3. THANH TOÁN & IN HÓA ĐƠN");
             System.out.println("0. Tạm ngưng (Quay lại menu chính)");
             System.out.print("Chọn thao tác: ");
-            
+            try {
             int action = Integer.parseInt(scanner.nextLine()); 
                 switch (action) {
                     case 1:
@@ -118,10 +127,15 @@ public class StaffUI {
                     default:
                         System.out.println("Lựa chọn không hợp lệ.");
                 }
+             } catch (NumberFormatException e) {
+            // Lỗi khi người dùng nhập chữ vào ô yêu cầu nhập số
+            System.err.println("Lỗi: Vui lòng chỉ nhập con số, không nhập ký tự chữ!");
+        } catch (Exception e) {
+            // Lỗi hệ thống phát sinh ngoài ý muốn (vd: lỗi logic trong salesService)
+            System.err.println("Đã xảy ra lỗi hệ thống: " + e.getMessage());
+        }
         }
     }
-    
-    
     private void handleCustomerLookup() {
         System.out.println("\n--- TRA CỨU THÔNG TIN KHÁCH HÀNG ---");
         System.out.print("Nhập số điện thoại khách hàng: ");
